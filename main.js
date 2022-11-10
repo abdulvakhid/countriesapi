@@ -10,16 +10,16 @@ const elText = document.querySelector(".title");
 let data;
 let apiAll = `https://restcountries.com/v3.1/all`;
 
+//Modal elements 
 const elModal = document.querySelector(".modal-info");
 const modalImg = document.querySelector(".img");
 const modalCountryName = document.querySelector(".country");
 const modalRegion = document.querySelector(".modalregion");
 const modalCurrency = document.querySelector(".currency");
-const modalBorders = document.querySelector(".border");
+const modalBorders = document.querySelector(".borders");
 const modalLanguage = document.querySelector(".language");
 const modalSubRegion = document.querySelector(".subregion");
 const modalMap = document.querySelector(".maps");
-
 
 async function createList(api) {
     elList.innerHTML = "";
@@ -46,9 +46,6 @@ async function createList(api) {
     }
 }
 
-createList(apiAll)
-
-
 function moreInfo(nameId) {
     let foundCountry = data.find((element) => {
         return element.name.common === nameId;
@@ -61,9 +58,8 @@ function moreInfo(nameId) {
     modalRegion.textContent = foundCountry.region;
 
     let currency = Object.keys(foundCountry.currencies)
-
     modalCurrency.textContent = currency.join(", ");
-    modalBorders.textContent = foundCountry.borders;
+    modalBorders.textContent = foundCountry.borders.join(", ");
 
     let language = Object.values(foundCountry.languages);
     modalLanguage.textContent = language.join(", ");
@@ -72,13 +68,10 @@ function moreInfo(nameId) {
 }
 
 elList.addEventListener("click", function (evt) {
-
     if (evt.target.matches(".more-info")) {
         moreInfo(evt.target.dataset.id);
     }
-
 })
-
 
 elForm.addEventListener("submit", function (evt) {
     evt.preventDefault();
@@ -95,56 +88,8 @@ elSelectForm.addEventListener("change", function (evt) {
     createList(`https://restcountries.com/v3.1/region/${regionValue}`)
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 elChangeThemeBtn.addEventListener("click", function () {
     document.body.classList.toggle("theme-dark");
 });
+
+createList(apiAll)
